@@ -24,5 +24,18 @@
    Cessna 402  (Wings)
    by Dick Williams, rjw1@tyrell.net
 */
+
+
 $ds = DIRECTORY_SEPARATOR;
-require(__DIR__. $ds . '..' . $ds . 'app' . $ds . 'config' . $ds . 'bootstrap.php');
+
+// 1️⃣ Autoload Composer (OBLIGATOIRE)
+require __DIR__ . $ds . '..' . $ds . 'vendor' . $ds . 'autoload.php';
+
+// 2️⃣ Session
+session_start();
+
+// 3️⃣ Bootstrap application
+require __DIR__ . $ds . '..' . $ds . 'app' . $ds . 'config' . $ds . 'bootstrap.php';
+
+// 4️⃣ Démarrage Flight
+Flight::start();
