@@ -69,3 +69,37 @@
         dateDonnee DATETIME,
         
     );
+
+
+CREATE VIEW livraison_v_HistoriqueBenefice AS
+SELECT 
+    DATE(l.dateLivraison) AS jour,
+    MONTH(l.dateLivraison) AS mois,
+    YEAR(l.dateLivraison) AS annee,
+    SUM(c.prixUnitaire * c.poidsColis) AS chiffreAffaire,
+    SUM(l.coutVoiture + l.salaireChauffeur) AS coutRevient,
+    SUM((c.prixUnitaire * c.poidsColis) - (l.coutVoiture + l.salaireChauffeur)) AS benefice
+FROM livraison_Livraison l
+JOIN livraison_Colis c ON l.idColis = c.id
+WHERE l.idEtat = 2 -- LIVRÉ
+GROUP BY jour, mois, annee;
+
+
+CREATE VIEW livraison_v_livraison_detail AS
+SELECT 
+  l.id,
+  c.descriptionColi,
+  v.nomVehicule,
+  ch.nomChauffeur,
+  e.nomEntrepot,
+  el.etatlivraison,
+  l.dateLivraison,
+  l.coutVoiture,
+  l.salaireChauffeur
+FROM livraison_Livraison l
+JOIN livraison_Colis c ON l.idColis = c.id
+JOIN livraison_Vehicules v ON l.idVehicule = v.id
+JOIN livraison_Chauffeur ch ON l.idChauffeur = ch.id
+JOIN livraison_Entrepot e ON l.idEntrepot = e.id
+JOIN livraison_EtatLivraison el ON l.idEtat = el.id;
+
