@@ -15,7 +15,7 @@ les tables
     CREATE TABLE livraison_Chauffeur (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nomChauffeur VARCHAR(75),
-        idVehicule INT,
+        -- idVehicule INT,
         idSociete INT
     );
 
