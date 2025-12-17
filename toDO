@@ -1,0 +1,163 @@
+les tables
+    CREATE TABLE livraison_Societes(
+        id INT AUTO_INCREMENT PRIMARY KEY ,
+        nomSociete VARCHAR(25),
+        addresseSociete VARCHAR(20)
+    );
+
+    CREATE TABLE livraison_Vehicules(
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nomVehicule VARCHAR(50),
+        idSociete INT,
+        idTypeVehicule INT 
+    );
+
+    CREATE TABLE livraison_Chauffeur (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nomChauffeur VARCHAR(75),
+        idVehicule INT,
+        idSociete INT
+    );
+
+-- mvt
+    CREATE TABLE livraison_Livraison(
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        idColis INT,
+        idEntrepot INT,
+        destination VARCHAR(30),
+        idVehicule INT,
+        idEtat INT,
+        idChauffeur INT,
+        dateLivraison DATETIME,
+        coutVoiture DOUBLE,
+        -- beneficeSociete DOUBLE, -- attribut fotsiny -> zany hoe setter-na
+        salaireChauffeur DOUBLE
+    );
+
+    CREATE TABLE livraison_TypeVehicules(
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        poidsMax DOUBLE
+    );
+
+    CREATE TABLE livraison_Colis(
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        descriptionColi VARCHAR(50),
+        poidsColis DOUBLE,
+        prixUnitaire DOUBLE
+    );
+
+    CREATE TABLE livraison_Entrepot(
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        adresseEntrepot VARCHAR(20),
+        nomEntrepot VARCHAR(50)
+    );
+
+    CREATE TABLE livraison_EtatLivraison( -- en attente, livre, annule
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        etatlivraison VARCHAR(20)
+    );
+-- pour le moment
+    CREATE TABLE livraison_ZoneLivraison(
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        zoneLivraison VARCHAR(20)
+    );
+
+    -- CREATE TABLE livraison_HistoriqueBenefice(
+    --     id INT AUTO_INCREMENT PRIMARY KEY,
+    --     dateDonnee DATETIME,
+    --     montant DOUBLE
+    -- );
+    -- CREATE VIEW livraison_v_HistoriqueBenefice AS SELECT 
+    
+    CREATE TABLE livraison_User(
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nomUser VARCHAR(20),
+        loginUser VARCHAR(20),
+        mdp VARCHAR(10)
+    );
+
+-- to do
+donnee de test = IA 
+
+1. page : login.php (responsable societe) (Estelle)
+base 
+    utiliser livraison_User
+fonction
+    checkLogin( loginUser, mdp)
+affichage
+    formulaire : 2 inputs + submit
+traitement 
+    ok ? accueil : login+erreur
+
+2. page : accueil.php (bienvenue) (Andry)
+base 
+
+fonction
+
+affichage
+    navigation + bienvenue
+traitement
+    selon navigation (href)
+
+3. page : gestionLivraison.php (Andry et Estelle)
+affichage gauche : insertion (Estelle)
+base 
+    livraison_Livraison
+    livraison_Colis
+    livraison_Vehicules
+    livraison_Chauffeur
+    livraison_Entrepot
+fonction 
+    getAllColis()
+    getAllVehicules()
+    getAllChauffeur()
+    getAllEntrepot()
+    saveLivraison()
+affichage
+    form 
+        inputs : tous les champs de livraison 
+                + select-option des idChauffeur, idVehicule, idEntrepot
+                et si idColis ? select-option : bouton "+" -> form via js pour creer un colis
+traitement 
+        submit : ajax + saveLivraison()
+integration
+    appel des fonctions necessaires pour la page et le traitement
+
+_________________________
+
+affichage gauche liste des livraisons  (Andry)
+base 
+    livraison_Livraison
+fonction
+    getAllColis()
+    getAllVehicules()
+    getAllChauffeur()
+    getAllEntrepot()
+    getAllLivraison()
+    updateLivraison() -> si il y a changement d etatlivraison
+affichage gauche
+  div:liste  
+    table 
+        titre (champ de livraison_Livraison)
+        tr : nom au lieu de id pour colis, vehicule, chauffeur et entrepot
+        bouton : si en attente ? il y a bouton livrer (vert) et annuler (rouge): bouton grise ou inactif
+traitement
+    si bouton livrer ou annuler cliqued -> updateLivraison() avec les changements via ajax
+
+
+5. page : benefice  (Andry et Estelle)
+base
+    livraison_v_HistoriqueBenefice
+fonction
+    getAllBenefice()
+affichage gauche (Estelle)
+  div:benefice  
+    inputs filtre : jour + option : ">=" ou "<=" ou "="
+    inputs filtre : mois + option : ">=" ou "<=" ou "="
+    inputs filtre : annee + option : ">=" ou "<=" ou "="
+    div : montant benefice
+
+affichage droite (Andry)
+        bouton details : voir details
+traitement
+    si voir details -> affichage details (cout revient et chiffre d affaire) via js
