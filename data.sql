@@ -1,3 +1,7 @@
+    CREATE OR REPLACE DATABASE livraisonNoelS3;
+
+    USE livraisonNoelS3;
+
     CREATE TABLE livraison_Societes(
         id INT AUTO_INCREMENT PRIMARY KEY ,
         nomSociete VARCHAR(25),
