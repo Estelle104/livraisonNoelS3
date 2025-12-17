@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
     CREATE OR REPLACE DATABASE livraisonNoelS3;
 
     USE livraisonNoelS3;
+=======
+DROP DATABASE IF EXISTS livraisonNoelS3;
+CREATE DATABASE IF NOT EXISTS livraisonNoelS3;
+USE livraisonNoelS3;
+>>>>>>> Stashed changes
 
     CREATE TABLE livraison_Societes(
         id INT AUTO_INCREMENT PRIMARY KEY ,
@@ -18,7 +24,7 @@
     CREATE TABLE livraison_Chauffeur (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nomChauffeur VARCHAR(75),
-        idVehicule INT,
+        -- idVehicule INT,
         idSociete INT,
         salaire DOUBLE
     );
